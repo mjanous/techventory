@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{% url techventory.views.server_list 1 %}">&lt&lt Back to the Server List</a>
+<h2>{{ object.name }}</h2>
+<ul>
+    <li><b>Description:</b>
+    <p>{{ object.description }}</p>
+    </li>
+    <li><b>Date of Purchase:</b>
+    <p>{{ object.dop }}</p>
+    </li>
+    {% if object.is_physical %}
+        {% if object.guest_set.all %}
+    <li><b>Guests:</b>
+            {% for guest in object.guest_set.all %}
+    <p><a href="{{ guest.get_absolute_url }}">{{ guest.name }}</a></p>
+    </li>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+    <li><b>Host:</b>
+    <p><a href="{{ object.host.get_absolute_url }}">{{ object.host }}</a></p>
+    </li>
+    {% endif %}
+    <li><b>Last Modified:</b>
+    <p>{{ object.last_modified }}
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,109 @@
+html, body {
+  color: black;
+  background-color: #eee;
+  font: x-small "Lucida Grande", "Lucida Sans Unicode", geneva, verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+table.server_list {margin: auto}
+
+thead th {text-align:center;background-color:#f0f0f0;color:#333;font-size: 1.3em;}
+td, th {padding:3px;border:none;}
+
+tbody tr th, td.navbar {background-color:#f0f0f0;color:#333;}
+tbody tr th.left {text-align:left;}
+tbody tr th.center, td.navbar {text-align:center;}
+tbody tr th.right {text-align:right;}
+
+tr.odd td {background-color:#edf3fe;}
+tr.even td {background-color:#fff;}
+
+#header {
+  height: 70px;
+  width: 777px;
+  background-color: #444444;
+  color: #fff;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  margin: 0 auto 0 auto;
+  text-align: center;  
+  font-family: Helvetica, Arial, "Lucida Sans Unicode", Tahoma, sans-serif;
+  font-size: 3.9em;
+  font-weight: normal; 
+  padding-top: 20px;
+}
+
+a.link, a, a.active {
+  color: #369;
+}
+
+
+#content {
+  color: black;
+  font-size: 127%;
+  background-color: white;
+  width: 757px;
+  margin: 0 auto 0 auto;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  padding: 10px;
+}
+
+#sidebar {
+  border: 1px solid #aaa;
+  background-color: #eee;
+  margin: 0.5em;
+  padding: 1em;
+  float: right;
+  width: 200px;
+  font-size: 88%;
+}
+
+#sidebar h2 {
+  margin-top: 0;
+}
+
+#sidebar ul {
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+h1 {
+  font-family:Verdana, Helvetica, Arial, "Lucida Sans Unicode", Tahoma, sans-serif;
+  font-size:2.2em;
+  font-weight:normal;
+  color: #369;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+.legend p {
+  font-size:.7em;
+  font-weight:lighter;
+  color:#666;
+  text-align: center;
+}
+
+#footer {
+  border: 1px solid #aaa;
+  border-top: 0px none;
+  color: #999;
+  background-color: white;
+  padding: 10px;
+  font-size: 80%;
+  text-align: center;
+  width: 757px;
+  margin: 0 auto 1em auto;
+}
+
+.code {
+  font-family: monospace;
+}
+
+span.code {
+  font-weight: bold;
+  background: #eee;
+}

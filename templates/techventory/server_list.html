@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="server_list">
+<thead>
+<tr>
+    <th colspan="4">Server List</th>
+</tr>
+<tr>
+    <td class="navbar" colspan="4">Pagination navbar goes here.</td>
+</tr>
+</thead>
+<tfoot>
+<tr>
+    <td class="navbar" colspan="4">Pagination navbar goes here.</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+    <th>Name</th>
+    <th>Type of Server</th>
+    <th>Hosted by</th>
+    <th>Virtual Host?</th>
+</tr>
+{% for server in object_list %}
+<tr class="{% cycle 'odd' 'even' %}">
+    <td><a href="{{ server.get_absolute_url }}">{{ server.name }}</a></td>
+    {% spaceless %}
+    <td>
+        {% if server.is_physical %}
+            Physical
+        {% else %}
+            Virtual
+        {% endif %}
+    </td>
+    {% endspaceless %}
+    <td>{% if server.host %}<a href="{{ server.host.get_absolute_url }}">{{ server.host }}</a>{% else %}None{% endif %}</td>
+    <td>{% if server.guest_set.all %}True{% else %}False{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
