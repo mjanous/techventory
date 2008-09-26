@@ -2,11 +2,11 @@ html, body {
   color: black;
   background-color: #eee;
   font: x-small "Lucida Grande", "Lucida Sans Unicode", geneva, verdana, sans-serif;
-  margin: 0;
-  padding: 0;
+  margin: 5;
+  padding: 5;
 }
 
-table.server_list {margin: auto}
+table.server_list {margin: auto; width: 99%}
 
 thead th {text-align:center;background-color:#f0f0f0;color:#333;font-size: 1.3em;}
 td, th {padding:3px;border:none;}
@@ -21,7 +21,6 @@ tr.even td {background-color:#fff;}
 
 #header {
   height: 70px;
-  width: 777px;
   background-color: #444444;
   color: #fff;
   border-left: 1px solid #aaa;
@@ -43,7 +42,6 @@ a.link, a, a.active {
   color: black;
   font-size: 127%;
   background-color: white;
-  width: 757px;
   margin: 0 auto 0 auto;
   border-left: 1px solid #aaa;
   border-right: 1px solid #aaa;
@@ -95,7 +93,6 @@ h2 {
   padding: 10px;
   font-size: 80%;
   text-align: center;
-  width: 757px;
   margin: 0 auto 1em auto;
 }
 

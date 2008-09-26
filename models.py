@@ -13,17 +13,11 @@ class Application(models.Model):
 class PhysicalServerManager(models.Manager):
     def get_query_set(self):
         return super(PhysicalServerManager, self).get_query_set().filter(is_physical=True)
-    
-    def make_virtual(self):
-        pass
-        
 
 # manager for the server model (returns all guest servers)
 class VirtualServerManager(models.Manager):
     def get_query_set(self):
         return super(VirtualServerManager, self).get_query_set().filter(is_physical=False)
-    
-    # TODO: make functions that change a virtual server into a physical server sanely
     
 class Server(models.Model):
     # required fields
@@ -32,7 +26,7 @@ class Server(models.Model):
     is_physical = models.BooleanField(default=True)
             
     # optional fields
-    cores = models.IntegerField(default=1)
+    cores = models.IntegerField(null=True, blank=True)
     memory = models.IntegerField(null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
     applications = models.ManyToManyField(Application, related_name='servers', null=True, blank=True)

@@ -4,23 +4,83 @@
 <table class="server_list">
 <thead>
 <tr>
-    <th colspan="4">Server List</th>
+    <th colspan="5">Server List</th>
 </tr>
 <tr>
-    <td class="navbar" colspan="4">Pagination navbar goes here.</td>
+    <td class="navbar" colspan="5">
+    {% if page_obj.has_previous %}
+    <a href="{% url techventory.views.server_list 1 %}?order_by={{ order_by }}">&lt&lt</a> 
+    <a href="{% url techventory.views.server_list previous %}?order_by={{ order_by }}">&lt</a>
+    {% else %}&lt&lt &lt{% endif %}
+    
+    {% for page_num in paginator.page_range %}
+    {% ifequal page_num page %}
+    {{ page }}
+    {% else %}
+    <a href="{% url techventory.views.server_list page_num %}?order_by={{ order_by }}">{{ page_num }}</a>
+    {% endifequal %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a href="{% url techventory.views.server_list next %}?order_by={{ order_by }}">&gt</a>
+    <a href="{% url techventory.views.server_list paginator.num_pages %}?order_by={{ order_by }}">&gt&gt</a></td>
+    {% else %}&gt &gt&gt{% endif %}
 </tr>
 </thead>
 <tfoot>
 <tr>
-    <td class="navbar" colspan="4">Pagination navbar goes here.</td>
+    <td class="navbar" colspan="5">
+    {% if page_obj.has_previous %}
+    <a href="{% url techventory.views.server_list 1 %}?order_by={{ order_by }}">&lt&lt</a> 
+    <a href="{% url techventory.views.server_list previous %}?order_by={{ order_by }}">&lt</a>
+    {% else %}&lt&lt &lt{% endif %}
+    
+    {% for page_num in paginator.page_range %}
+    {% ifequal page_num page %}
+    {{ page }}
+    {% else %}
+    <a href="{% url techventory.views.server_list page_num %}?order_by={{ order_by }}">{{ page_num }}</a>
+    {% endifequal %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a href="{% url techventory.views.server_list next %}?order_by={{ order_by }}">&gt</a>
+    <a href="{% url techventory.views.server_list paginator.num_pages %}?order_by={{ order_by }}">&gt&gt</a></td>
+    {% else %}&gt &gt&gt{% endif %}
 </tr>
 </tfoot>
 <tbody>
 <tr>
-    <th>Name</th>
-    <th>Type of Server</th>
-    <th>Hosted by</th>
-    <th>Virtual Host?</th>
+    <th style="width: 20%">
+        {% ifequal order_by 'name' %}
+        <a href="{% url techventory.views.server_list page %}?order_by=-name">Name</a></th>
+        {% else %}
+        <a href="{% url techventory.views.server_list page %}?order_by=name">Name</a></th>
+        {% endifequal %}
+    <th style="width: 20%">
+        {% ifequal order_by 'type' %}
+        <a href="{% url techventory.views.server_list page %}?order_by=-type">Type of Server</a></th>
+        {% else %}
+        <a href="{% url techventory.views.server_list page %}?order_by=type">Type of Server</a></th>
+        {% endifequal %}
+    <th style="width: 20%">
+        {% ifequal order_by 'host' %}
+        <a href="{% url techventory.views.server_list page %}?order_by=-host">Hosted by</a></th>
+        {% else %}
+        <a href="{% url techventory.views.server_list page %}?order_by=host">Hosted by</a></th>
+        {% endifequal %}
+    <th style="width: 20%">
+        {% ifequal order_by 'ishost' %}
+        <a href="{% url techventory.views.server_list page %}?order_by=-ishost">Virtual Host?</a></th>
+        {% else %}
+        <a href="{% url techventory.views.server_list page %}?order_by=ishost">Virtual Host?</a></th>
+        {% endifequal %}
+    <th style="width: 20%">
+        {% ifequal order_by 'mod' %}
+        <a href="{% url techventory.views.server_list page %}?order_by=-mod">Last Modified</a></th>
+        {% else %}
+        <a href="{% url techventory.views.server_list page %}?order_by=mod">Last Modified</a></th>
+        {% endifequal %}
 </tr>
 {% for server in object_list %}
 <tr class="{% cycle 'odd' 'even' %}">
@@ -36,6 +96,7 @@
     {% endspaceless %}
     <td>{% if server.host %}<a href="{{ server.host.get_absolute_url }}">{{ server.host }}</a>{% else %}None{% endif %}</td>
     <td>{% if server.guest_set.all %}True{% else %}False{% endif %}</td>
+    <td>{{ server.last_modified|date:"H:i:s - M d, Y" }}</td>
 </tr>
 {% endfor %}
 </tbody>
