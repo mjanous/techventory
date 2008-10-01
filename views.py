@@ -23,6 +23,10 @@ def server_list(request, page):
             query = Server.objects.all().order_by('hostname')
         elif order_by == '-name':
             query = Server.objects.all().order_by('-hostname')
+        elif order_by == 'domain':
+            query = Server.objects.all().order_by('domain')
+        elif order_by == '-domain':
+            query = Server.objects.all().order_by('-domain')
         elif order_by == 'type':
             query = Server.objects.all().order_by('is_physical')
         elif order_by == '-type':

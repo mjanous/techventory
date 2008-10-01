@@ -36,6 +36,7 @@ class Server(models.Model):
     # optional fields
     ip_addr = models.IPAddressField('IP Address', null=True, blank=True, default=None)
     mac_addr = models.CharField('MAC Address', max_length=20, null=True, blank=True)
+    proc_speed = models.IntegerField('Processor speed (MHz)', null=True, blank=True)
     cores = models.IntegerField(null=True, blank=True)
     memory = models.IntegerField(null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
@@ -66,6 +67,7 @@ class Server(models.Model):
         super(Server, self).save(force_insert, force_update)
         
     def fqdn(self):
+        "The fully qualified domain name of the server."
         return '.'.join((self.hostname, self.domain))
         
     @models.permalink

@@ -4,10 +4,10 @@
 <table class="server_list">
 <thead>
 <tr>
-    <th colspan="5">Server List</th>
+    <th colspan="6">Server List</th>
 </tr>
 <tr>
-    <td class="navbar" colspan="5">
+    <td class="navbar" colspan="6">
     {% if page_obj.has_previous %}
     <a href="{% url techventory.views.server_list 1 %}?order_by={{ order_by }}">&lt&lt</a> 
     <a href="{% url techventory.views.server_list previous %}?order_by={{ order_by }}">&lt</a>
@@ -29,7 +29,7 @@
 </thead>
 <tfoot>
 <tr>
-    <td class="navbar" colspan="5">
+    <td class="navbar" colspan="6">
     {% if page_obj.has_previous %}
     <a href="{% url techventory.views.server_list 1 %}?order_by={{ order_by }}">&lt&lt</a> 
     <a href="{% url techventory.views.server_list previous %}?order_by={{ order_by }}">&lt</a>
@@ -51,13 +51,19 @@
 </tfoot>
 <tbody>
 <tr>
-    <th style="width: 20%">
+    <th style="width: 10%">
         {% ifequal order_by 'name' %}
-        <a href="{% url techventory.views.server_list page %}?order_by=-name">Name</a></th>
+        <a href="{% url techventory.views.server_list page %}?order_by=-name">Hostname</a></th>
         {% else %}
-        <a href="{% url techventory.views.server_list page %}?order_by=name">Name</a></th>
+        <a href="{% url techventory.views.server_list page %}?order_by=name">Hostname</a></th>
         {% endifequal %}
-    <th style="width: 20%">
+    <th style="width: 15%">
+        {% ifequal order_by 'domain' %}
+        <a href="{% url techventory.views.server_list page %}?order_by=-domain">Domain</a></th>
+        {% else %}
+        <a href="{% url techventory.views.server_list page %}?order_by=domain">Domain</a></th>
+        {% endifequal %}
+    <th style="width: 15%">
         {% ifequal order_by 'type' %}
         <a href="{% url techventory.views.server_list page %}?order_by=-type">Type of Server</a></th>
         {% else %}
@@ -84,7 +90,8 @@
 </tr>
 {% for server in object_list %}
 <tr class="{% cycle 'odd' 'even' %}">
-    <td><a href="{{ server.get_absolute_url }}">{{ server.fqdn }}</a></td>
+    <td><a href="{{ server.get_absolute_url }}">{{ server.hostname }}</a></td>
+    <td>{{ server.domain }}</td>
     {% spaceless %}
     <td>
         {% if server.is_physical %}
