@@ -104,3 +104,19 @@ span.code {
   font-weight: bold;
   background: #eee;
 }
+
+input {
+  display: block;
+}
+
+textarea {
+  display: block;
+}
+
+.submit-post {
+  display: inline;
+}
+
+.submit-preview {
+  display: inline;
+}
