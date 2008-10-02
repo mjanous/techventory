@@ -1,0 +1,8 @@
+#header {width: 777px;}
+#content {width: 757px;}
+#footer {width: 757px;}
+.comment_form {width: 400px;}
+input textarea {
+    position:absolute;
+    right:100px;
+}
