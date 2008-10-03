@@ -1,6 +1,21 @@
 from django.db import models
 import datetime
 
+class OperatingSystem(models.Model):
+    name = models.CharField(max_length=40)
+    description = models.TextField(max_length=400, blank=True)
+
+    def __unicode__(self):
+        return self.name
+    
+class OperatingSystemVersion(models.Model):
+    os = models.ForeignKey(OperatingSystem, related_name='versions')
+    version = models.CharField(max_length=60)
+    
+    def __unicode__(self):
+        display = ' '.join((self.os.name, self.version))
+        return unicode(display)
+
 class Application(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField(max_length=400, blank=True)
@@ -35,18 +50,28 @@ class Server(models.Model):
             
     # optional fields
     ip_addr = models.IPAddressField('IP Address', null=True, blank=True, default=None)
-    mac_addr = models.CharField('MAC Address', max_length=20, null=True, blank=True)
+    mac_addr = models.CharField('MAC Address', max_length=20, blank=True)
     proc_speed = models.IntegerField('Processor speed (MHz)', null=True, blank=True)
     cores = models.IntegerField(null=True, blank=True)
     memory = models.IntegerField(null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
     host = models.ForeignKey('self', related_name='guest_set', null=True, blank=True)
     dop = models.DateField('date of purchase', null=True, blank=True)
+    os = models.ManyToManyField(
+        OperatingSystemVersion,
+        related_name='servers_installed_on',
+        null=True, blank=True,
+    )
     applications = models.ManyToManyField(
         ApplicationVersion,
         related_name='servers_installed_on',
-        null=True, blank=True
+        null=True, blank=True,
     )
+    
+    # administrator fields
+    remote_login_user = models.CharField('Remote Login Username', max_length=60, blank=True)
+    remote_login_pass = models.CharField('Remote Login Password', max_length=128, blank=True)
+    other_info = models.TextField('Misc. Sensitive Info', blank=True)
     
     # metadata fields
     last_modified = models.DateTimeField('last modified', editable=False)
@@ -67,7 +92,9 @@ class Server(models.Model):
         super(Server, self).save(force_insert, force_update)
         
     def fqdn(self):
-        "The fully qualified domain name of the server."
+        """
+        The fully qualified domain name of the server.
+        """
         return '.'.join((self.hostname, self.domain))
         
     @models.permalink
