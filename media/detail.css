@@ -6,3 +6,10 @@ input textarea {
     position:absolute;
     right:100px;
 }
+h4 {
+    margin-bottom:0px;
+    margin-top:0px;
+}
+p {
+    margin-top:2px;
+}
