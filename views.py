@@ -13,37 +13,47 @@ def index(request):
     )
 
 def server_list(request, page):
-    if request.GET.has_key('order_by'):
-        order_by = request.GET['order_by']
-        if order_by == 'mod':
-            query = Server.objects.all().order_by('-last_modified')
-        elif order_by == '-mod':
-            query = Server.objects.all().order_by('last_modified')
-        elif order_by == 'name':
-            query = Server.objects.all().order_by('hostname')
-        elif order_by == '-name':
-            query = Server.objects.all().order_by('-hostname')
-        elif order_by == 'domain':
-            query = Server.objects.all().order_by('domain')
-        elif order_by == '-domain':
-            query = Server.objects.all().order_by('-domain')
-        elif order_by == 'type':
-            query = Server.objects.all().order_by('is_physical')
-        elif order_by == '-type':
-            query = Server.objects.all().order_by('-is_physical')
-        elif order_by == 'ishost':
-            query = Server.objects.all().order_by('guest_set')
-        elif order_by == '-ishost':
-            query = Server.objects.all().order_by('-guest_set')
-        elif order_by == 'host':
-            query = Server.objects.all().order_by('host')
-        elif order_by == '-host':
-            query = Server.objects.all().order_by('-host')
-        else:
-            query = Server.objects.all()
+    order = ''
+    order_type = ''
+    
+    if request.GET.has_key('o'):
+        order = request.GET['o']
+        if request.GET.has_key('ot'):
+            order_type = request.GET['ot']
+            if order_type == 'asc':
+                if order == 'mod':
+                    query = Server.objects.all().order_by('last_modified')
+                elif order == 'name':
+                    query = Server.objects.all().order_by('hostname')
+                elif order == 'domain':
+                    query = Server.objects.all().order_by('domain')
+                elif order == 'type':
+                    query = Server.objects.all().order_by('-is_physical')
+                elif order == 'ishost':
+                    query = Server.objects.all().order_by('guest_set')
+                elif order == 'host':
+                    query = Server.objects.all().order_by('host')
+                else:
+                    query = Server.objects.all()
+            else:
+                order_type = 'dsc'
+                if order == 'mod':
+                    query = Server.objects.all().order_by('-last_modified')
+                elif order == 'name':
+                    query = Server.objects.all().order_by('-hostname')
+                elif order == 'domain':
+                    query = Server.objects.all().order_by('-domain')
+                elif order == 'type':
+                    query = Server.objects.all().order_by('is_physical')
+                elif order == 'ishost':
+                    query = Server.objects.all().order_by('-guest_set')
+                elif order == 'host':
+                    query = Server.objects.all().order_by('-host')
+                else:
+                    query = Server.objects.all()
+
     else:
         query = Server.objects.all()
-        order_by = ''
             
     return list_detail.object_list(
         request,
@@ -51,7 +61,7 @@ def server_list(request, page):
         template_name='techventory/server_list.html',
         paginate_by=20,
         page=page,
-        extra_context={'order_by': order_by}
+        extra_context={'ot': order_type, 'o': order}
     )
 
 def server_detail(request, object_id):
